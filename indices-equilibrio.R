@@ -9,8 +9,6 @@ rstudioapi::getSourceEditorContext()$path %>%
 
 dir.create("tmp")
 
-
-
 # pipe grande que trata quase tudo de uma vez
 
 pnadc_sp <- get_pnadc(year = 2019,
