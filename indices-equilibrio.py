@@ -12,5 +12,12 @@ elif os.getenv('username') == 'Lucas':
     os.chdir('C:/Users/Lucas/Desktop/pnadc-reports/')
 
 
+os.mkdir("tmp/")
 
-pnad = pnadc.get(3, 2020, "tmp")
+
+# dando problema no pacote, tem que baixar os dicionários antes
+
+pnadc.extract.docs("tmp/")
+
+pnad = pnadc.get(2, 2020, "tmp/")[["V2007", "V2010", "V4010", "VD4010","VD4017",\
+                                   "VD4002", "V1028", "UF"]]["UF" == "São Paulo"]
