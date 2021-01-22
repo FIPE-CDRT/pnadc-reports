@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# Preciso de do input fundamental aqui, que √© a base com os ie_racial
+# Preciso de do input fundamental aqui, que √É¬© a base com os ie_racial
 
 # To-do: 
-#    o t√≠tulo muda toda hora de acordo com a var selecionada, tem que ficar parado
-#    cortar s√≥ no BR e aumentar o tamanho do grafico com rela√ß√£o ao botao de sele√ß√£o
+#    o t√É¬≠tulo muda toda hora de acordo com a var selecionada, tem que ficar parado
+#    cortar s√É¬≥ no BR e aumentar o tamanho do grafico com rela√É¬ß√É¬£o ao botao de sele√É¬ß√É¬£o
 
 
 import plotly.graph_objects as go
@@ -37,67 +37,56 @@ fig.update_layout(
     updatemenus=[go.layout.Updatemenu(
         active=0,
         buttons=list(
-            [dict(label = 'Agricultura, pecu·ria, produÁ„oo florestal, pesca e aquicultura',
+            [dict(label = 'Agricultura, pecu√°ria, produ√ß√£oo florestal, pesca e aquicultura',
                   method = 'update',
                   args = [{'visible': [True, False, False, False, False, False, False, False, False, False, False]},
-                          {'title': 'Agricultura, pecu·ria, produÁ„oo florestal, pesca e aquicultura',
-                           'showlegend':True}]),
-             dict(label = 'Ind˙stria geral',
+                          {'showlegend':True}]),
+             dict(label = 'Ind√∫stria geral',
                   method = 'update',
                   args = [{'visible': [False, True, False, False, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'IndÌtria geral',
-                           'showlegend':True}]),
-             dict(label = 'ConstruÁ„o',
+                          {'showlegend':True}]),
+             dict(label = 'Constru√ß√£o',
                   method = 'update',
                   args = [{'visible': [False, False, True, False, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'ConstruÁ„o',
-                           'showlegend':True}]),
-             dict(label = 'ComÈrcio, reparaÁ„o de veÌ≠culos automotores e motocicletas',
+                          {'showlegend':True}]),
+             dict(label = 'Com√©rcio, repara√ß√£o de ve√≠¬≠culos automotores e motocicletas',
                   method = 'update',
                   args = [{'visible': [False, False, False, True, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'ComÈrcio, reparaÁ„o de veÌ≠culos automotores e motocicletas',
-                           'showlegend':True}]),
-             dict(label = 'Transporte, armazenagem e correios†',
+                          {'showlegend':True}]),
+             dict(label = 'Transporte, armazenagem e correios¬†',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, True, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Transporte, armazenagem e correios†',
-                           'showlegend':True}]),
-             dict(label = 'Alojamento e alimentaÁ„o†',
+                          {'showlegend':True}]),
+             dict(label = 'Alojamento e alimenta√ß√£o¬†',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, True, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Alojamento e alimentaÁ„o†',
-                           'showlegend':True}]),
-             dict(label = 'InformaÁ„o, comunicaÁ„o e atividades financeiras, imobili·rias, profissionais e administrativas',
+                          {'showlegend':True}]),
+             dict(label = 'Informa√ß√£o, comunica√ß√£o e atividades financeiras, imobili√°rias, profissionais e administrativas',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, True, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'InformaÁ„o, comunicaÁ„o e atividades financeiras, imobili·rias, profissionais e administrativas',
-                           'showlegend':True}]),
-             dict(label = 'AdministraÁ„o p˙blica, defesa e seguridade social',
+                          {'showlegend':True}]),
+             dict(label = 'Administra√ß√£o p√∫blica, defesa e seguridade social',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, True, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'AdministraÁ„o p˙blica, defesa e seguridade social',
-                           'showlegend':True}]),
-             dict(label = 'EducaÁ„o, sa˙de humana e serviÁos sociais',
+                          {'showlegend':True}]),
+             dict(label = 'Educa√ß√£o, sa√∫de humana e servi√ßos sociais',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, False, True, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'EducaÁ„o, sa˙de humana e serviÁos sociais',
-                           'showlegend':True}]),
-             dict(label = 'Outros ServiÁos',
+                          {'showlegend':True}]),
+             dict(label = 'Outros Servi√ßos',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, False, False, True, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Outros ServiÁos',
-                           'showlegend':True}]),
-             dict(label = 'ServiÁos domÈsticos',
+                          {'showlegend':True}]),
+             dict(label = 'Servi√ßos dom√©sticos',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, False, False, False, True]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'ServiÁos domÈsticos',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
             ])
         )
     ])
 
 fig.update_layout(
-    title_text = 'Õçndice de EquilÌ≠brio Racial',
+    title_text = '√ç¬çndice de Equil√≠¬≠brio Racial',
     geo_scope='south america', 
 )
 

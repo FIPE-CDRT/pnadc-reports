@@ -40,58 +40,47 @@ fig.update_layout(
             [dict(label = 'Agricultura, pecuária, produçãoo florestal, pesca e aquicultura',
                   method = 'update',
                   args = [{'visible': [True, False, False, False, False, False, False, False, False, False, False]},
-                          {'title': 'Agricultura, pecuária, produçãoo florestal, pesca e aquicultura',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Indústria geral',
                   method = 'update',
                   args = [{'visible': [False, True, False, False, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Indítria geral',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Construção',
                   method = 'update',
                   args = [{'visible': [False, False, True, False, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Construção',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Comércio, reparação de veí­culos automotores e motocicletas',
                   method = 'update',
                   args = [{'visible': [False, False, False, True, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Comércio, reparação de veí­culos automotores e motocicletas',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Transporte, armazenagem e correios ',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, True, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Transporte, armazenagem e correios ',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Alojamento e alimentação ',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, True, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Alojamento e alimentação ',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Informação, comunicação e atividades financeiras, imobiliárias, profissionais e administrativas',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, True, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Informação, comunicação e atividades financeiras, imobiliárias, profissionais e administrativas',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Administração pública, defesa e seguridade social',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, True, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Administração pública, defesa e seguridade social',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Educação, saúde humana e serviços sociais',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, False, True, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Educação, saúde humana e serviços sociais',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Outros Serviços',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, False, False, True, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Outros Serviços',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
              dict(label = 'Serviços domésticos',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, False, False, False, True]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Serviços domésticos',
-                           'showlegend':True}]),
+                          {'showlegend':True}]),
             ])
         )
     ])
