@@ -1,8 +1,9 @@
-# Preciso de do input fundamental aqui, que é a base com os ie_genero
+# -*- coding: utf-8 -*-
+# Preciso de do input fundamental aqui, que Ã© a base com os ie_genero
 
 # To-do: 
-#    o título muda toda hora de acordo com a var selecionada, tem que ficar parado
-#    cortar só no BR e aumentar o tamanho do grafico com relação ao botao de seleção
+#    o tÃ­tulo muda toda hora de acordo com a var selecionada, tem que ficar parado
+#    cortar sÃ³ no BR e aumentar o tamanho do grafico com relaÃ§Ã£o ao botao de seleÃ§Ã£o
 
 
 import plotly.graph_objects as go
@@ -36,30 +37,30 @@ fig.update_layout(
     updatemenus=[go.layout.Updatemenu(
         active=0,
         buttons=list(
-            [dict(label = 'Agricultura, pecuária, produção florestal, pesca e aquicultura',
+            [dict(label = 'Agricultura, pecuária, produçãoo florestal, pesca e aquicultura',
                   method = 'update',
                   args = [{'visible': [True, False, False, False, False, False, False, False, False, False, False]},
-                          {'title': 'Agricultura, pecuária, produção florestal, pesca e aquicultura',
+                          {'title': 'Agricultura, pecuária, produçãoo florestal, pesca e aquicultura',
                            'showlegend':True}]),
              dict(label = 'Indústria geral',
                   method = 'update',
                   args = [{'visible': [False, True, False, False, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Indústria geral',
+                          {'title': 'Indítria geral',
                            'showlegend':True}]),
              dict(label = 'Construção',
                   method = 'update',
                   args = [{'visible': [False, False, True, False, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
                           {'title': 'Construção',
                            'showlegend':True}]),
-             dict(label = 'Comércio, reparação de veículos automotores e motocicletas',
+             dict(label = 'Comércio, reparação de veí­culos automotores e motocicletas',
                   method = 'update',
                   args = [{'visible': [False, False, False, True, False, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Comércio, reparação de veículos automotores e motocicletas',
+                          {'title': 'Comércio, reparação de veí­culos automotores e motocicletas',
                            'showlegend':True}]),
-             dict(label = 'Transporte, armazenagem e correio ',
+             dict(label = 'Transporte, armazenagem e correios ',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, True, False, False, False, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Transporte, armazenagem e correio ',
+                          {'title': 'Transporte, armazenagem e correios ',
                            'showlegend':True}]),
              dict(label = 'Alojamento e alimentação ',
                   method = 'update',
@@ -71,10 +72,10 @@ fig.update_layout(
                   args = [{'visible': [False, False, False, False, False, False, True, False, False, False, False]}, # the index of True aligns with the indices of plot traces
                           {'title': 'Informação, comunicação e atividades financeiras, imobiliárias, profissionais e administrativas',
                            'showlegend':True}]),
-             dict(label = 'Administração pública, defesa e seguridade social ',
+             dict(label = 'Administração pública, defesa e seguridade social',
                   method = 'update',
                   args = [{'visible': [False, False, False, False, False, False, False, True, False, False, False]}, # the index of True aligns with the indices of plot traces
-                          {'title': 'Administração pública, defesa e seguridade social ',
+                          {'title': 'Administração pública, defesa e seguridade social',
                            'showlegend':True}]),
              dict(label = 'Educação, saúde humana e serviços sociais',
                   method = 'update',
@@ -96,7 +97,7 @@ fig.update_layout(
     ])
 
 fig.update_layout(
-    title_text = 'Índice de Equilíbrio de Gênero',
+    title_text = 'Índice de Equilí­brio de Gênero',
     geo_scope='south america', # limite map scope to USA
 )
 

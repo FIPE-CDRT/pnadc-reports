@@ -32,7 +32,8 @@ os.mkdir('tmp/')
 
 pnadc.extract.docs('tmp/')
 
-pnad_raw = pnadc.get(2, 2020, 'tmp/')
+pnad_raw = pnadc.build(data_file = 'PNADC_032020.txt',
+                       input_file = 'input/input_PNADC_trimestral.txt')
     
 pnadc_sp = (pnad_raw
             .filter(items=['V2007', 'V2010', 'V4010', 'VD4010','VD4016','VD4002', 'V1028', 'UF'])
