@@ -1,19 +1,12 @@
-# To do:
-#    limpar o código, tem muito df sobrando sem motivo
-#    double check nas operacoes
+# -*- coding: utf-8 -*-
 
-
+# Preambulo (mude o diretório se necessário) ==================================
 
 import pandas as pd
 import numpy as np
 import pnadc
 import os
-import json
-import plotly.express as px
 
-
-# tentar generalizar isso daqui fazendo o diretorio de trabalho seja automaticamente
-# a localizacao do script
 
 if os.getenv('username') == 'lucas.cardoso':
     os.chdir('C:/Users/lucas.cardoso/Desktop/pnadc-reports/')
@@ -23,68 +16,83 @@ elif os.getenv('username') == 'Lucas':
 
 os.mkdir('tmp/')
 
-
-# dando problema no pacote, tem que baixar os dicionários antes
-# arquivo da última PNAD tá zuado, tem que 
+#==============================================================================
 
 
-# Mapa do IER por UF baseado na última PNAD Trimestral
+# Download e build da PNAD ====================================================
+# mudar essa parte depois da atualização do pacote
 
 pnadc.extract.docs('tmp/')
 
 pnad_raw = pnadc.build(data_file = 'PNADC_032020.txt',
                        input_file = 'input/input_PNADC_trimestral.txt')
+
+#==============================================================================
+
+
+# Cálculo dos IEs =============================================================
     
-pnadc_sp = (pnad_raw
-            .filter(items=['V2007', 'V2010', 'V4010', 'VD4010','VD4016','VD4002', 'V1028', 'UF'])
-            .query('VD4002 == 1')
-            .assign(cod = np.floor(pnad_raw['V4010']/1000),
-                    setor = pnad_raw['VD4010'],
-                    mulher = (pnad_raw['V2007'] == 2).astype(int),
-                    negro = (pnad_raw['V2010'].isin([2,4])).astype(int),
-                    salario = pnad_raw['VD4016'],
-                    count = 1,
-                    peso = pnad_raw['V1028'])
-            .query('salario == salario'))                     # NaN são diferentes entre si
+pnadc = (pnad_raw
+         .filter(items=['V2007', 'V2010', 'V4010', 'VD4010','VD4016','VD4002', 'V1028', 'UF'])
+         .assign(cod = np.floor(pnad_raw['V4010']/1000),
+                 setor = pnad_raw['VD4010'],
+                 mulher = (pnad_raw['V2007'] == 2).astype(int),
+                 negro = (pnad_raw['V2010'].isin([2,4])).astype(int),
+                 salario = pnad_raw['VD4016'],
+                 count = 1,
+                 peso = pnad_raw['V1028'])
+         .query('salario == salario'))              # NaN são diferentes entre si
                 
-del pnad_raw
-
-
 # proporções a nível setor-ocupação
 
-wm = lambda x: np.average(x, weights = pnadc_sp.loc[x.index, 'peso'])
+pnadc['salario'] = pnadc['salario']*pnadc['peso']   # para ponderar para a massa salarial
 
-b_ocup_setor = (pnadc_sp.groupby(['setor', 'cod', 'UF'])
+wm = lambda x: np.average(x, weights = pnadc.loc[x.index, 'peso'])
+
+b_ocup_setor = (pnadc
+                .query('VD4002 == 1')               # ocupação só existe para empregados
+                .groupby(['UF', 'setor', 'cod'])
                 .agg(b_mulher = ('mulher', wm),
                      b_negro = ('negro', wm),
-                     salario_medio = ('salario', 'sum'))       # massa salarial!!! (salario médio fica muito estranho)
-                .reset_index())
+                     massa_salarial = ('salario', 'sum'))       
+                .reset_index()
+                )
 
-p_ocup = (pnadc_sp.groupby(['cod', 'UF'])
+
+p_refs = (pnadc
+          .query('VD4002 == 1 | VD4002 == 2')        # PEA é a minha pop de referencia
+          .groupby(['UF'])
           .agg(p_mulher = ('mulher', wm),
                p_negro = ('negro', wm))
           .reset_index()
           )
 
+
 indice_estado = (b_ocup_setor
-                 .merge(right = p_ocup,
+                 .merge(right = p_refs,
                                how = 'inner',
-                               on = ['cod', 'UF'])
+                               on = ['UF'])
+                 .reset_index()
                  )
 
-indice_estado.loc[indice_estado.p_mulher == 0, 'p_mulher'] = 0.01     # em 2 lugares é zero!
 
-indice_estado['ie_racial_pre'] = (((indice_estado['b_negro'] - indice_estado['p_negro'])/indice_estado['p_negro'])*((indice_estado['p_negro'])/(1-indice_estado['p_negro']))**(indice_estado['b_negro']))*indice_estado['salario_medio']
-indice_estado['ie_genero_pre'] = (((indice_estado['b_mulher'] - indice_estado['p_mulher'])/indice_estado['p_mulher'])*((indice_estado['p_mulher'])/(1-indice_estado['p_mulher']))**(indice_estado['b_mulher']))*indice_estado['salario_medio']
+# calculo os IEs já multiplicando pela massa salarial para depois agregar e somar tudo
+indice_estado['ie_racial_pre'] = (((indice_estado['b_negro'] - indice_estado['p_negro'])/indice_estado['p_negro'])*((indice_estado['p_negro'])/(1-indice_estado['p_negro']))**(indice_estado['b_negro']))*indice_estado['massa_salarial']
+indice_estado['ie_genero_pre'] = (((indice_estado['b_mulher'] - indice_estado['p_mulher'])/indice_estado['p_mulher'])*((indice_estado['p_mulher'])/(1-indice_estado['p_mulher']))**(indice_estado['b_mulher']))*indice_estado['massa_salarial']
 
-indice_estado = indice_estado.filter(['UF', 'setor', 'ie_racial_pre', 'ie_genero_pre', 'salario_medio'])
+indice_estado = indice_estado.filter(['UF', 'setor', 'ie_racial_pre', 'ie_genero_pre', 'massa_salarial'])
 
 indice_estado = indice_estado.groupby(['UF', 'setor']).sum().reset_index()
 
 indice_estado = indice_estado[indice_estado['setor'] != 12]
 
-indice_estado['ie_racial'] = indice_estado['ie_racial_pre']/indice_estado['salario_medio']
-indice_estado['ie_genero'] = indice_estado['ie_genero_pre']/indice_estado['salario_medio']
+indice_estado['ie_racial'] = indice_estado['ie_racial_pre']/indice_estado['massa_salarial']
+indice_estado['ie_genero'] = indice_estado['ie_genero_pre']/indice_estado['massa_salarial']
+
+#==============================================================================
+
+
+# DFs separados para cada índice ==============================================
  
 ie_genero = (indice_estado.pivot(index = 'UF',
                                 columns = 'setor',
@@ -99,7 +107,7 @@ ie_racial = (indice_estado.pivot(index = 'UF',
              )
 
 
-siglas = pd.read_csv('input/siglas-estados.csv')
+siglas = pd.read_csv('input/siglas-estados.csv')    # para dar merge no GeoJSON
 
 ie_genero = ie_genero.merge(right = siglas,
                             how = 'inner',
@@ -141,3 +149,5 @@ ie_racial = ie_racial.rename(columns={1.0: 'um',
                                       'NOME': 'nome'})
 
 ie_racial['SIGLA'] = ie_racial['SIGLA'].astype(str)
+
+del [p_refs, indice_estado, pnadc, b_ocup_setor, siglas, pnad_raw]
