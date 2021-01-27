@@ -1,22 +1,15 @@
 # -*- coding: utf-8 -*-
-# Preciso de do input fundamental aqui, que Ã© a base com os ie_racial
-
-# To-do: 
-#    o tÃ­tulo muda toda hora de acordo com a var selecionada, tem que ficar parado
-#    cortar sÃ³ no BR e aumentar o tamanho do grafico com relaÃ§Ã£o ao botao de seleÃ§Ã£o
-
+# Preciso de do input fundamental aqui, que é o df com os ie_racial
 
 import plotly.graph_objects as go
 import pandas as pd
 import json
 
 
-# GeoJSON do mapa dos 
+# GeoJSON do mapa dos estados
 
 with open('input/brazil_geo.json', encoding='utf-8') as response:    
     mapa_estados = json.load(response)
-
-
 
 
 # Create figure
@@ -29,6 +22,9 @@ for sector in ['um', 'dois', 'tres', 'quatro', 'cinco', 'seis', 'sete', 'oito', 
                                 locations = ie_racial['nome'],
                                 z = ie_racial[sector].astype(float),
                                 colorscale = "Viridis",
+                                colorbar_title = "IER",
+                                marker_line_color = 'darkgray',
+                                marker_line_width = 0.5,
                                 zmin = -1,
                                 zmax = 1))
 
@@ -36,8 +32,12 @@ for sector in ['um', 'dois', 'tres', 'quatro', 'cinco', 'seis', 'sete', 'oito', 
 fig.update_layout(
     updatemenus=[go.layout.Updatemenu(
         active=0,
+        x=0.3,
+        xanchor = 'left',
+        y=1.2,
+        yanchor = 'top',
         buttons=list(
-            [dict(label = 'Agricultura, pecuária, produçãoo florestal, pesca e aquicultura',
+            [dict(label = 'Agricultura, pecuária, produção florestal, pesca e aquicultura',
                   method = 'update',
                   args = [{'visible': [True, False, False, False, False, False, False, False, False, False, False]},
                           {'showlegend':True}]),
@@ -86,8 +86,22 @@ fig.update_layout(
     ])
 
 fig.update_layout(
-    title_text = 'Índice de Equilí­brio Racial',
-    geo_scope='south america', 
+    title_text = 'Índice de Equilíbrio Racial',
+    annotations=[
+        go.layout.Annotation(x = 0.5,
+                             y = -0.1,
+                             text = ('Nota: IER calculado baseado em '
+                             '<a href="https://www.insper.edu.br/wp-content/uploads/2020/12/IER_Firpo_Franca_Cavalcanti_.pdfurl">Firpo, França e Rodrigues (2020)</a> '
+                             'com dados do 3T da PNADC de 2020.'),                   
+                             showarrow = False, xref='paper', yref='paper', 
+                             xanchor='center',
+                             yanchor='auto',
+                             xshift=0,
+                             yshift=0
+        )]    
 )
+
+fig.update_geos(fitbounds = 'locations',
+                visible = False)
 
 fig.write_html("tmp/ie_racial.html")
