@@ -106,4 +106,5 @@ fig.update_layout(
 fig.update_geos(fitbounds = 'locations',
                 visible = False)
 
-fig.write_html("tmp/ie_genero.html")
+fig.write_html("tmp/ie_genero.html",
+               include_plotlyjs="cdn")
