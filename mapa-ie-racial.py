@@ -5,10 +5,9 @@ import plotly.graph_objects as go
 import pandas as pd
 import json
 
-
 # GeoJSON do mapa dos estados
 
-with open('input/brazil_geo.json', encoding='utf-8') as response:    
+with open('input/GEOBR.geojson', encoding='utf-8') as response:    
     mapa_estados = json.load(response)
 
 
@@ -87,12 +86,14 @@ fig.update_layout(
 
 fig.update_layout(
     title_text = 'Índice de Equilíbrio Racial',
-    annotations=[
+    annotations = [
         go.layout.Annotation(x = 0.5,
                              y = -0.1,
                              text = ('Nota: IER calculado baseado em '
                              '<a href="https://www.insper.edu.br/wp-content/uploads/2020/12/IER_Firpo_Franca_Cavalcanti_.pdf">Firpo, França e Rodrigues (2020)</a> '
-                             'com dados do 3T da PNADC de 2020.'),                   
+                             'com dados do 3T da PNADC de 2020. <br>'
+                             'IER = 1: brancos excluídos. <br>'
+                             'IER = -1: negros excluídos.'),                   
                              showarrow = False, xref='paper', yref='paper', 
                              xanchor='center',
                              yanchor='auto',
@@ -104,4 +105,5 @@ fig.update_layout(
 fig.update_geos(fitbounds = 'locations',
                 visible = False)
 
-fig.write_html("tmp/ie_racial.html")
+fig.write_html("tmp/ie_racial.html",
+               include_plotlyjs="cdn")
