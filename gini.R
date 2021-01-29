@@ -27,54 +27,93 @@ trimestre = 3
 
 
 
-
-
-
-
-
-
-
-
-
 #-------------------------------------------------------------------------------
 
 ano_inicio = ano - 4
 anos_completos = (ano_inicio + 1):(ano -1)
 
+gini_data <- data.frame(matrix(ncol = 4, nrow = 0))   
+  colnames(gini_data) <- c('Ano', 'Trimestre', 'UF', 'Gini')
+  
 
+  
 for (t in 1:trimestre) {
   
   
-  PNADc_inicio = get_pnadc(year = ano,
-                           quarter = t,
-                           ) %>%
-                 convey_prep()
+  pnadc = get_pnadc(year = ano,
+                    quarter = t,
+                    vars = c('Ano','Trimestre', 'UF', 'VD4019'))
+  
+  pnadc <- convey_prep(pnadc)
+  
+  gini_estados <- svyby(~VD4019, by = ~UF, pnadc, svygini, na.rm  =  TRUE)
+    rownames(gini_estados) <- NULL
+  
+  gini_estados <- gini_estados %>%
+                  dplyr::select(UF, VD4019) %>%
+                  dplyr::rename(Gini = VD4019) %>%
+                  dplyr::mutate(Ano = ano,
+                                Trimestre = t) %>%
+                  dplyr::relocate(Ano, Trimestre, UF, Gini)
+  
+  gini_data <- rbind(gini_data, gini_estados)
   
     
 }
 
 
-
-for (t in trimestre:4) {
   
   
-  PNADc_inicio = get_pnadc(year = ano_inicio,
-                           quarter = t,
-                           ) %>%
-                 convey_prep()
-  
-  
-}
-
-
-for (year in anos_completos) {
-  
-  for (t in 1:4) {
+  for (year in anos_completos) {
     
-    
-    
-    
+    for (t in 1:4) {
+      
+      pnadc = get_pnadc(year = year,
+                        quarter = t,
+                        vars = c('Ano','Trimestre', 'UF', 'VD4019'))
+      
+      pnadc <- convey_prep(pnadc)
+      
+      gini_estados <- svyby(~VD4019, by = ~UF, pnadc, svygini, na.rm  =  TRUE)
+      rownames(gini_estados) <- NULL
+      
+      gini_estados <- gini_estados %>%
+        dplyr::select(UF, VD4019) %>%
+        dplyr::rename(Gini = VD4019) %>%
+        dplyr::mutate(Ano = year,
+                      Trimestre = t) %>%
+        dplyr::relocate(Ano, Trimestre, UF, Gini)
+      
+      gini_data <- rbind(gini_data, gini_estados)
+      
+      
+    }
     
   }
   
+  
+  
+for (t in trimestre:4) {
+  
+  
+  pnadc = get_pnadc(year = ano_inicio,
+                    quarter = t,
+                    vars = c('Ano','Trimestre', 'UF', 'VD4019'))
+  
+  pnadc <- convey_prep(pnadc)
+  
+  gini_estados <- svyby(~VD4019, by = ~UF, pnadc, svygini, na.rm  =  TRUE)
+    rownames(gini_estados) <- NULL
+  
+  gini_estados <- gini_estados %>%
+                  dplyr::select(UF, VD4019) %>%
+                  dplyr::rename(Gini = VD4019) %>%
+                  dplyr::mutate(Ano = ano_inicio,
+                                Trimestre = t) %>%
+                  dplyr::relocate(Ano, Trimestre, UF, Gini)
+  
+  gini_data <- rbind(gini_data, gini_estados)
+  
+  
 }
+
