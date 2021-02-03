@@ -22,8 +22,8 @@ for sector in ['um', 'dois', 'tres', 'quatro', 'cinco', 'seis', 'sete', 'oito', 
                                 z = ie_racial[sector].astype(float),
                                 colorscale = "Viridis",
                                 colorbar_title = "IER",
-                                marker_line_color = 'darkgray',
-                                marker_line_width = 0.5,
+                                marker_line_color = 'white',
+                                marker_line_width = 0.8,
                                 zmin = -1,
                                 zmax = 1))
 
