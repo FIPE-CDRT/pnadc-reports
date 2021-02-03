@@ -224,10 +224,12 @@ fig.update_layout(
     yaxis_title = "Índice de Gini",
     annotations=[
         go.layout.Annotation(x = 0.5,
-                             y = -0.1,
+                             y = -0.15,
                              text = ('Desigualdade de renda do trabalho medida com dados das '
-                                     'PNADs Contínuas Trimestrais.<br>'
-                                     'Clique nas siglas da legenda para plotar mais estados.'),                   
+                                     'PNADs Contínuas Trimestrais.'
+                                     'Clique nas siglas da legenda para plotar mais estados. <br>'
+                                     'Gini = 1: concentração absoluta na distribuição de renda.<br>'
+                                     'Gini = 0: igualdade absoluta na distribuição de renda.'),                   
                              showarrow = False, xref='paper', yref='paper', 
                              xanchor='center',
                              yanchor='auto',
